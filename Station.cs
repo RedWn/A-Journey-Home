@@ -21,12 +21,12 @@ class Station {
 
 	public int GetWaitingTime(Connection connection)
 	{
-        if (connection is BusConnection)
+        if (connection.Type == ConnectionType.BUS)
         {
             return BusWaitTime;
 		}
 
-        else if (connection is TaxiConnection)
+        else if (connection.Type == ConnectionType.TAXI)
         {
             return TaxiWaitTime;
         }
