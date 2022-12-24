@@ -25,7 +25,7 @@ class State {
 		this.money += path.getMoneyChange();
 	}
 
-	List<State> getNextStates() {
+	public List<State> getNextStates() {
 		List<State> nextStates = new List<State>();
 
 		foreach (Connection connection in this.station.connections) {
@@ -45,7 +45,7 @@ class State {
 
 		return futureMoney <= Program.INITIAL_MONEY && futureHp > 0;
 	}
-	
+
 	public bool isFinal() {
 		return this.station == Program.HOME_STATION;
 	}
