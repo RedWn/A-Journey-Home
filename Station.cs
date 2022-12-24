@@ -1,30 +1,36 @@
 class Station {
-	public string name;
-	public int taxiWaitTime;
-	public int busWaitTime;
-	public List<Connection> connections;
+	public readonly string Name;
+
+	public int TaxiWaitTime { get; private set; }
+	public int BusWaitTime { get; private set; }
+
+	public List<Connection> Connections;
 
 	public Station(string name, int taxiWaitTime, int busWaitTime) {
-		this.name = name;
-		this.taxiWaitTime = taxiWaitTime;
-		this.busWaitTime = busWaitTime;
+		Name = name;
+		TaxiWaitTime = taxiWaitTime;
+		BusWaitTime = busWaitTime;
 
-		this.connections = new List<Connection>();
+		Connections = new List<Connection>();
 	}
 
-	public void addConnection(ConnectionType type, Station targetStation, int distanceInKm, int speedInKph) {
-		Connection connection;
+	public void AddConnection(ConnectionType type, Station targetStation, int distanceInKm, int speedInKph) {
+		Connection connection = ConnectionFactory.GetConnection(type, targetStation, distanceInKm, speedInKph);
+		Connections.Add(connection);
+	}
 
-		if (type  == ConnectionType.BUS) {
-			connection = new BusConnection(targetStation, distanceInKm, speedInKph);
-		} else if (type == ConnectionType.TAXI) {
-			connection = new TaxiConnection(targetStation, distanceInKm, speedInKph);
-		} else {
-			connection = new OnFootConnection(targetStation, distanceInKm, speedInKph);
+	public int GetWaitingTime(Connection connection)
+	{
+        if (connection is BusConnection)
+        {
+            return BusWaitTime;
 		}
 
-		this.connections.Add(connection);
-	}
-}
+        else if (connection is TaxiConnection)
+        {
+            return TaxiWaitTime;
+        }
 
-public enum ConnectionType { BUS, TAXI, ON_FOOT };
+		return 0;
+    }
+}

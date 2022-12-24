@@ -1,15 +1,18 @@
 ﻿class Program {
 	public static Station? HOME_STATION;
-	public static int INITIAL_MONEY = 100;
 
 	public static void Main() {
-		Station university = new Station("university", 10, 10);
-		Station jaramana = new Station("jaramana", 20, 30);
-		Station karajElSet = new Station("karaj el set", 10, 5);
-		HOME_STATION = new Station("rukn al dein", 5, 30);
+		Station university = new Station("university", 1, 1);
+		Station jaramana = new Station("jaramana", 1, 1);
+		Station karajElSet = new Station("karaj el set", 1, 1);
 
-		university.addConnection(ConnectionType.BUS, jaramana, 200, 20);
-		jaramana.addConnection(ConnectionType.BUS, karajElSet, 100, 70);
-		karajElSet.addConnection(ConnectionType.BUS, HOME_STATION, 30, 3000);
+		HOME_STATION = new Station("rukn al dein", 1, 1);
+
+		university.AddConnection(ConnectionType.BUS, jaramana, 1, 1);
+		jaramana.AddConnection(ConnectionType.BUS, karajElSet, 1, 1);
+		karajElSet.AddConnection(ConnectionType.BUS, HOME_STATION, 1, 1);
+
+		State initialState = new State(station: university, timeSpent: 0, hp: 100, money: 1500);
+		Solver.Solve(initialState);
 	}
 }
