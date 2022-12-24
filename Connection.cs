@@ -58,6 +58,6 @@ class OnFootConnection: Connection {
 	}
 
 	override public int getHpChange() {
-		return -5 * this.distanceInKm;
+		return -10 * this.distanceInKm;
 	}
 }
