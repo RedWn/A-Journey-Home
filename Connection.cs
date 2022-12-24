@@ -1,5 +1,5 @@
 abstract class Connection {
-	Station targetStation;
+	public Station targetStation;
 	protected int distanceInKm;
 	protected int speedInKph;
 
