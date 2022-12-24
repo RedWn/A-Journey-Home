@@ -14,11 +14,20 @@ class Station {
 		Connections = new List<Connection>();
 	}
 
-	public void AddConnection( ConnectionType type, Station targetStation, int distanceInKm,
-						 		bool isPaved, float busSpeedInKph, float taxiSpeedInKph, string route) {
-		Connection connection = ConnectionFactory.GetConnection(type, targetStation, distanceInKm,
-													 isPaved, busSpeedInKph, taxiSpeedInKph, route);
-		Connections.Add(connection);
+	public void AddConnection( Station targetStation, int distanceInKm,
+						 		bool isPaved, float? busSpeedInKph, float? taxiSpeedInKph, string? route) {
+		List<Connection> list = ConnectionFactory.GetConnection(
+													 targetStation,
+													 distanceInKm,
+													 isPaved,
+													 busSpeedInKph,
+													 taxiSpeedInKph,
+													 route
+													);
+		Connections.Add(list[0]);
+		if(list.Count() == 2){
+			Connections.Add(list[1]);
+		}
 	}
 
 	public int GetWaitingTime(Connection connection)

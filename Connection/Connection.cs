@@ -5,15 +5,23 @@ abstract class Connection {
 	protected float? TaxiSpeedInKPH;
 	protected string? RouteName;
 
-	protected Connection(Station targetStation, int distanceInKm, bool isPaved,
-							float busSpeedInKph, float taxiSpeedInKph, string route) {
+	//for bus connection
+	protected Connection(Station targetStation, int distanceInKm, float busSpeedInKph, string route) {
 		TargetStation = targetStation;
 		DistanceInKm = distanceInKm;
-		if(isPaved){
-			BusSpeedInKPH = busSpeedInKph;
-			TaxiSpeedInKPH = taxiSpeedInKph;
-			RouteName = route;
-		}
+		BusSpeedInKPH = busSpeedInKph;
+		RouteName = route;
+	}
+	//for taxi connection	
+	protected Connection(Station targetStation, int distanceInKm, float taxiSpeedInKph) {
+		TargetStation = targetStation;
+		DistanceInKm = distanceInKm;
+		TaxiSpeedInKPH = taxiSpeedInKph;
+	}
+	//for on foot connection
+	protected Connection(Station targetStation, int distanceInKm) {
+		TargetStation = targetStation;
+		DistanceInKm = distanceInKm;
 	}
 
 	public abstract float GetTimeChange();
@@ -22,10 +30,8 @@ abstract class Connection {
 }
 
 class BusConnection: Connection {
-	public BusConnection(Station targetStation, int distanceInKm, bool isPaved,
-						float busSpeedInKph, float taxiSpeedInKph, string route)
-		: base(targetStation, distanceInKm, isPaved, busSpeedInKph, taxiSpeedInKph, route) {}
-
+	public BusConnection(Station targetStation, int distanceInKm, float busSpeedInKph, string route)
+		: base(targetStation, distanceInKm,  busSpeedInKph, route) {}
 
 	override public int GetMoneyChange() {
 		return -400;
@@ -42,9 +48,8 @@ class BusConnection: Connection {
 }
 
 class TaxiConnection: Connection {
-	public TaxiConnection(Station targetStation, int distanceInKm, bool isPaved,
-							float busSpeedInKph, float taxiSpeedInKph, string route)
-		: base(targetStation, distanceInKm, isPaved, busSpeedInKph, taxiSpeedInKph, route) {}
+	public TaxiConnection(Station targetStation, int distanceInKm, float taxiSpeedInKph)
+		: base(targetStation, distanceInKm, taxiSpeedInKph) {}
 
 
 	override public int GetMoneyChange() {
@@ -62,9 +67,8 @@ class TaxiConnection: Connection {
 }
 
 class OnFootConnection: Connection {
-	public OnFootConnection(Station targetStation, int distanceInKm, bool isPaved,
-								float busSpeedInKph, float taxiSpeedInKph, string route)
-		: base(targetStation, distanceInKm, isPaved, busSpeedInKph, taxiSpeedInKph, route) {}
+	public OnFootConnection(Station targetStation, int distanceInKm)
+		: base(targetStation, distanceInKm) {}
 
 	override public int GetMoneyChange() {
 		return 0;

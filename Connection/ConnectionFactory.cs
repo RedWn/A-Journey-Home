@@ -1,15 +1,22 @@
 ﻿static class ConnectionFactory
 {
-   public static Connection GetConnection(ConnectionType type, Station targetStation, int distanceInKm,
-                                bool isPaved, float busSpeedInKph, float taxiSpeedInKph, string route)
+    public static List<Connection> GetConnection(Station targetStation, int distanceInKm,
+                                bool isPaved, float? busSpeedInKph, float? taxiSpeedInKph, string? route)
     {
-        return type switch
+        if (isPaved)
         {
-            ConnectionType.BUS => new BusConnection(targetStation, distanceInKm, isPaved, busSpeedInKph, taxiSpeedInKph, route),
-            ConnectionType.TAXI => new TaxiConnection(targetStation, distanceInKm, isPaved, busSpeedInKph, taxiSpeedInKph, route),
-            ConnectionType.ON_FOOT => new OnFootConnection(targetStation, distanceInKm, isPaved, busSpeedInKph, taxiSpeedInKph, route),
-            _ => new BusConnection(targetStation, distanceInKm, isPaved, busSpeedInKph, taxiSpeedInKph, route)
-        };
+            if (busSpeedInKph != null && route != null && taxiSpeedInKph != null)
+            {
+                return new List<Connection> {
+                    new BusConnection(targetStation, distanceInKm, busSpeedInKph.Value, route),
+                    new TaxiConnection(targetStation, distanceInKm, taxiSpeedInKph.Value)
+                };
+            }
+            return new List<Connection> { };
+        }
+        else
+        {
+            return new List<Connection> { new OnFootConnection(targetStation, distanceInKm) };
+        }
     }
 }
- 
