@@ -4,7 +4,7 @@ class Station {
 	public int busWaitTime;
 	public List<Connection> connections;
 
-	Station(string name, int taxiWaitTime, int busWaitTime) {
+	public Station(string name, int taxiWaitTime, int busWaitTime) {
 		this.name = name;
 		this.taxiWaitTime = taxiWaitTime;
 		this.busWaitTime = busWaitTime;
@@ -12,7 +12,19 @@ class Station {
 		this.connections = new List<Connection>();
 	}
 
-	public void addConnection(Connection connection) {
+	public void addConnection(ConnectionType type, Station targetStation, int distanceInKm, int speedInKph) {
+		Connection connection;
+
+		if (type  == ConnectionType.BUS) {
+			connection = new BusConnection(targetStation, distanceInKm, speedInKph);
+		} else if (type == ConnectionType.TAXI) {
+			connection = new TaxiConnection(targetStation, distanceInKm, speedInKph);
+		} else {
+			connection = new OnFootConnection(targetStation, distanceInKm, speedInKph);
+		}
+
 		this.connections.Add(connection);
 	}
 }
+
+public enum ConnectionType { BUS, TAXI, ON_FOOT };
