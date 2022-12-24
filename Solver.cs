@@ -1,7 +1,7 @@
 static class Solver
 {
     private static Dictionary<State, State?> _parents = new();
-    private static PriorityQueue<State, int> _queue = new();
+    private static PriorityQueue<State, float> _queue = new();
     private static HashSet<State> _visited = new();
 
     public static void Solve(State initialState)
@@ -24,7 +24,7 @@ static class Solver
             List<State> nextStates = state.GetNextStates();
             foreach (State nextState in nextStates)
             {
-                int priority = nextState.TimeSpent;
+                float priority = nextState.TimeSpent;
                 _queue.Enqueue(nextState, priority);
                 _parents[nextState] = state;
 

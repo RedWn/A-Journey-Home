@@ -14,8 +14,10 @@ class Station {
 		Connections = new List<Connection>();
 	}
 
-	public void AddConnection(ConnectionType type, Station targetStation, int distanceInKm, int speedInKph) {
-		Connection connection = ConnectionFactory.GetConnection(type, targetStation, distanceInKm, speedInKph);
+	public void AddConnection( ConnectionType type, Station targetStation, int distanceInKm,
+						 		bool isPaved, float busSpeedInKph, float taxiSpeedInKph, string route) {
+		Connection connection = ConnectionFactory.GetConnection(type, targetStation, distanceInKm,
+													 isPaved, busSpeedInKph, taxiSpeedInKph, route);
 		Connections.Add(connection);
 	}
 

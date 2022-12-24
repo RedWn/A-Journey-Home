@@ -2,11 +2,11 @@ class State
 {
     public Station Station;
 
-    public int TimeSpent;
+    public float TimeSpent;
     public int AvailableHP;
     public int AvailableMoney;
 
-	public State(Station station, int timeSpent, int hp, int money)
+	public State(Station station, float timeSpent, int hp, int money)
     {
         this.Station = station;
         this.TimeSpent = timeSpent;
