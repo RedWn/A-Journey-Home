@@ -1,8 +1,8 @@
 ﻿class Program {
-	public static Station HOME_STATION;
+	public static Station? HOME_STATION;
 	public static int INITIAL_MONEY = 100;
 
-	public void Main() {
+	public static void Main() {
 		Station university = new Station("university", 10, 10);
 		Station jaramana = new Station("jaramana", 20, 30);
 		Station karajElSet = new Station("karaj el set", 10, 5);
