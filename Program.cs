@@ -15,6 +15,8 @@
         karajElSet.AddConnection(ConnectionType.BUS, HOME_STATION, 1, 2.5f, "karajElBeit");
 
         State initialState = new State(station: university, timeSpent: 0, hp: 100, money: 1500);
-        Solver.Solve(initialState);
+
+        IComparer<StateInfo> comparer = new BestTimeGoal();
+        Solver.Solve(initialState, comparer);
     }
 }

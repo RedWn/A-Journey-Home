@@ -3,18 +3,18 @@ using System.Diagnostics;
 static class Solver
 {
     private static Dictionary<State, State?> _parents = new();
-    private static PriorityQueue<State, float> _queue = new();
     private static HashSet<State> _visited = new();
     private static Stopwatch _stopWatch = new();
     private static int _numberOfVisitedNodes = 0;
 
-    public static void Solve(State initialState)
+    public static void Solve(State initialState, IComparer<StateInfo> comparer)
     {
+        PriorityQueue<State, StateInfo> _queue = new(comparer);
         _stopWatch.Start();
 
         State? finalState = null;
         _parents[initialState] = null;
-        _queue.Enqueue(initialState, initialState.TimeSpent);
+        _queue.Enqueue(initialState, new StateInfo(initialState.TimeSpent, initialState.AvailableHP, initialState.AvailableMoney));
 
         bool shouldBreakLoop = false;
 
@@ -30,7 +30,7 @@ static class Solver
             List<State> nextStates = state.GetNextStates();
             foreach (State nextState in nextStates)
             {
-                float priority = nextState.TimeSpent;
+                var priority = new StateInfo(nextState.TimeSpent, nextState.AvailableHP, nextState.AvailableMoney);
                 _queue.Enqueue(nextState, priority);
                 _parents[nextState] = state;
 
