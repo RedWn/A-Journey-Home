@@ -55,7 +55,7 @@ static class Solver
         // Generate student path
         Stack<State> statesPath = new();
 
-        State s = _parents[finalState];
+        State s = finalState;
         while (s is not null)
         {
             statesPath.Push(s);
