@@ -1,11 +1,16 @@
+using System.Diagnostics;
+
 static class Solver
 {
     private static Dictionary<State, State?> _parents = new();
     private static PriorityQueue<State, float> _queue = new();
     private static HashSet<State> _visited = new();
+    private static Stopwatch _stopWatch = new();
+    private static int _numberOfVisitedNodes = 0;
 
     public static void Solve(State initialState)
     {
+        _stopWatch.Start();
 
         State? finalState = null;
         _parents[initialState] = null;
@@ -20,6 +25,7 @@ static class Solver
             State state = _queue.Dequeue();
             if (_visited.Contains(state)) continue;
             _visited.Add(state);
+            _numberOfVisitedNodes++;
 
             List<State> nextStates = state.GetNextStates();
             foreach (State nextState in nextStates)
@@ -37,11 +43,15 @@ static class Solver
             }
         }
 
+        _stopWatch.Stop();
         if (finalState is not null) printSolutionDetails(finalState);
     }
 
     private static void printSolutionDetails(State finalState)
     {
+        Console.WriteLine($"Time taken: {_stopWatch.Elapsed.TotalSeconds}");
+        Console.WriteLine($"Number of visited nodes: {_numberOfVisitedNodes}");
+
         // Generate student path
         Stack<State> statesPath = new();
 
@@ -55,7 +65,7 @@ static class Solver
         while (statesPath.Count > 0)
         {
             var state = statesPath.Pop();
-            Console.WriteLine($"Station: {state.Station.Name}");
+            Console.WriteLine($"Station: {state.Station.Name} - {state.PreviousConnection?.Type}");
             Console.WriteLine($"HP: {state.AvailableHP}, Time Spent: {state.TimeSpent}, Money: {state.AvailableMoney}");
             Console.WriteLine();
         }
