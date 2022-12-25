@@ -6,6 +6,8 @@ class State
     public int AvailableHP;
     public int AvailableMoney;
 
+    private Connection? _previousConnection = null;
+
 	public State(Station station, float timeSpent, int hp, int money)
     {
         Station = station;
@@ -18,9 +20,14 @@ class State
     {
         Station = connection.TargetStation;
 
+        bool isStudentRidingTheSameBus = _previousConnection?.BusRouteName == connection.BusRouteName;
+        if (!isStudentRidingTheSameBus)
+        {
+            AvailableMoney += connection.GetMoneyChange();
+        }
+
         TimeSpent += connection.GetTimeChange() + Station.GetWaitingTime(connection);
         AvailableHP += connection.GetHPChange();
-        AvailableMoney += connection.GetMoneyChange();
     }
 
     public List<State> GetNextStates()
@@ -40,10 +47,13 @@ class State
         return nextStates;
     }
 
-    private bool canTakeConnection(Connection path)
+    private bool canTakeConnection(Connection connection)
     {
-        int futureMoney = AvailableMoney + path.GetMoneyChange();
-        int futureHp = AvailableHP + path.GetHPChange();
+        
+        bool isStudentRidingTheSameBus = _previousConnection?.BusRouteName == connection.BusRouteName;
+
+        int futureMoney = !isStudentRidingTheSameBus ? AvailableMoney + connection.GetMoneyChange() : AvailableMoney;
+        int futureHp = AvailableHP + connection.GetHPChange();
 
         //Console.WriteLine($"Future money: {futureMoney}, Future HP: {futureHp}");
 
