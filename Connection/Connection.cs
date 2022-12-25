@@ -1,19 +1,19 @@
-abstract class Connection
-{
-    public Station TargetStation;
-    public ConnectionType Type { get; protected set; }
+abstract class Connection {
+	public Station TargetStation;
+    public ConnectionType Type;
+    public string? BusRouteName;
 
-    protected int DistanceInKm;
-    protected int SpeedInKPH;
+	protected float SpeedInKPH;
+	protected int DistanceInKm;
 
-    protected Connection(Station targetStation, int distanceInKm, int speedInKph)
+    protected Connection(Station targetStation, int distanceInKm, float speedInKph)
     {
         TargetStation = targetStation;
         DistanceInKm = distanceInKm;
         SpeedInKPH = speedInKph;
     }
 
-    public int GetTimeChange()
+    public float GetTimeChange()
     {
         return DistanceInKm / SpeedInKPH;
     }
@@ -24,9 +24,10 @@ abstract class Connection
 
 class BusConnection : Connection
 {
-    public BusConnection(Station targetStation, int distanceInKm, int speedInKph) : base(targetStation, distanceInKm, speedInKph)
+    public BusConnection(Station targetStation, int distanceInKm, float speedInKph, string routeName) : base(targetStation, distanceInKm, speedInKph)
     {
         Type = ConnectionType.BUS;
+        BusRouteName = routeName;
     }
 
 
@@ -43,7 +44,7 @@ class BusConnection : Connection
 
 class TaxiConnection : Connection
 {
-    public TaxiConnection(Station targetStation, int distanceInKm, int speedInKph) : base(targetStation, distanceInKm, speedInKph)
+    public TaxiConnection(Station targetStation, int distanceInKm, float speedInKph) : base(targetStation, distanceInKm, speedInKph)
     {
         Type = ConnectionType.TAXI;
     }
@@ -62,7 +63,7 @@ class TaxiConnection : Connection
 
 class OnFootConnection : Connection
 {
-    public OnFootConnection(Station targetStation, int distanceInKm, int speedInKph) : base(targetStation, distanceInKm, speedInKph)
+    public OnFootConnection(Station targetStation, int distanceInKm, float speedInKph) : base(targetStation, distanceInKm, speedInKph)
     {
         Type = ConnectionType.ON_FOOT;
     }

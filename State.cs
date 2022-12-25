@@ -2,36 +2,36 @@ class State
 {
     public Station Station;
 
-    public int TimeSpent;
+    public float TimeSpent;
     public int AvailableHP;
     public int AvailableMoney;
 
-	public State(Station station, int timeSpent, int hp, int money)
+	public State(Station station, float timeSpent, int hp, int money)
     {
-        this.Station = station;
-        this.TimeSpent = timeSpent;
-        this.AvailableHP = hp;
-        this.AvailableMoney = money;
+        Station = station;
+        TimeSpent = timeSpent;
+        AvailableHP = hp;
+        AvailableMoney = money;
     }
 
     public void GoThroughPath(Connection connection)
     {
-        this.Station = connection.TargetStation;
+        Station = connection.TargetStation;
 
-        this.TimeSpent += connection.GetTimeChange() + Station.GetWaitingTime(connection);
-        this.AvailableHP += connection.GetHPChange();
-        this.AvailableMoney += connection.GetMoneyChange();
+        TimeSpent += connection.GetTimeChange() + Station.GetWaitingTime(connection);
+        AvailableHP += connection.GetHPChange();
+        AvailableMoney += connection.GetMoneyChange();
     }
 
     public List<State> GetNextStates()
     {
         List<State> nextStates = new List<State>();
 
-        foreach (Connection connection in this.Station.Connections)
+        foreach (Connection connection in Station.Connections)
         {
-            if (this.canTakeConnection(connection))
+            if (canTakeConnection(connection))
             {
-                State stateClone = this.Clone();
+                State stateClone = Clone();
                 stateClone.GoThroughPath(connection);
                 nextStates.Add(stateClone);
             }
@@ -42,8 +42,8 @@ class State
 
     private bool canTakeConnection(Connection path)
     {
-        int futureMoney = this.AvailableMoney + path.GetMoneyChange();
-        int futureHp = this.AvailableHP + path.GetHPChange();
+        int futureMoney = AvailableMoney + path.GetMoneyChange();
+        int futureHp = AvailableHP + path.GetHPChange();
 
         //Console.WriteLine($"Future money: {futureMoney}, Future HP: {futureHp}");
 
@@ -52,11 +52,11 @@ class State
 
     public bool IsFinal()
     {
-        return this.Station == Program.HOME_STATION;
+        return Station == Program.HOME_STATION;
     }
 
     public State Clone()
     {
-        return new State(this.Station, this.TimeSpent, this.AvailableHP, this.AvailableMoney);
+        return new State(Station, TimeSpent, AvailableHP, AvailableMoney);
     }
 }
