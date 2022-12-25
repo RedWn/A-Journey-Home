@@ -11,6 +11,7 @@
 		HOME_STATION = new Station("rukn al dein", 1, 1);
 
 		university.AddConnection(jaramana, 1, true, 1, 2, "unimana");
+        
 		jaramana.AddConnection(karajElSet, 1, true, 1, 3, "jarElSet");
 		
 		jaramana.AddConnection(myCrushHouse, 1, false, null, null, null);

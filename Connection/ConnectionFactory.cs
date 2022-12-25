@@ -9,7 +9,8 @@
             {
                 return new List<Connection> {
                     new BusConnection(targetStation, distanceInKm, busSpeedInKph.Value, route),
-                    new TaxiConnection(targetStation, distanceInKm, taxiSpeedInKph.Value)
+                    new TaxiConnection(targetStation, distanceInKm, taxiSpeedInKph.Value),
+                    new OnFootConnection(targetStation, distanceInKm)
                 };
             }
             return new List<Connection> { };

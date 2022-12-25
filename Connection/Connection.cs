@@ -1,83 +1,85 @@
-abstract class Connection {
-	public Station TargetStation;
-	protected int DistanceInKm;
-	protected float? BusSpeedInKPH;
-	protected float? TaxiSpeedInKPH;
-	protected string? RouteName;
+abstract class Connection
+{
+    public Station TargetStation;
+    protected int DistanceInKm;
 
-	//for bus connection
-	protected Connection(Station targetStation, int distanceInKm, float busSpeedInKph, string route) {
-		TargetStation = targetStation;
-		DistanceInKm = distanceInKm;
-		BusSpeedInKPH = busSpeedInKph;
-		RouteName = route;
-	}
-	//for taxi connection	
-	protected Connection(Station targetStation, int distanceInKm, float taxiSpeedInKph) {
-		TargetStation = targetStation;
-		DistanceInKm = distanceInKm;
-		TaxiSpeedInKPH = taxiSpeedInKph;
-	}
-	//for on foot connection
-	protected Connection(Station targetStation, int distanceInKm) {
-		TargetStation = targetStation;
-		DistanceInKm = distanceInKm;
-	}
+    protected Connection(Station targetStation, int distanceInKm)
+    {
+        TargetStation = targetStation;
+        DistanceInKm = distanceInKm;
+    }
 
-	public abstract float GetTimeChange();
-	public abstract int GetMoneyChange();
-	public abstract int GetHPChange();
+    public abstract float GetTimeChange();
+    public abstract int GetMoneyChange();
+    public abstract int GetHPChange();
 }
 
-class BusConnection: Connection {
-	public BusConnection(Station targetStation, int distanceInKm, float busSpeedInKph, string route)
-		: base(targetStation, distanceInKm,  busSpeedInKph, route) {}
+class BusConnection : Connection
+{
+	protected float BusSpeedInKPH;
+    protected string RouteName;
+    public BusConnection(Station targetStation, int distanceInKm, float busSpeedInKph, string route)
+        : base(targetStation, distanceInKm)
+    {
+        BusSpeedInKPH = busSpeedInKph;
+        RouteName = route;
+    }
 
-	override public int GetMoneyChange() {
-		return -400;
-	}
+    override public int GetMoneyChange()
+    {
+        return -400;
+    }
 
-	override public int GetHPChange() {
-		return -5 * DistanceInKm;
-	}
-	override public float GetTimeChange() {
-		if(BusSpeedInKPH != null)
-			return DistanceInKm / BusSpeedInKPH.Value;
-		return 0;
+    override public int GetHPChange()
+    {
+        return -5 * DistanceInKm;
+    }
+    override public float GetTimeChange()
+    {
+        return DistanceInKm / BusSpeedInKPH;
     }
 }
 
-class TaxiConnection: Connection {
-	public TaxiConnection(Station targetStation, int distanceInKm, float taxiSpeedInKph)
-		: base(targetStation, distanceInKm, taxiSpeedInKph) {}
+class TaxiConnection : Connection
+{
+    public float TaxiSpeedInKPH;
+    public TaxiConnection(Station targetStation, int distanceInKm, float taxiSpeedInKph)
+        : base(targetStation, distanceInKm)
+    {
+        TaxiSpeedInKPH = taxiSpeedInKph;
+    }
 
+    override public int GetMoneyChange()
+    {
+        return (-1) * 1000 * DistanceInKm;
+    }
 
-	override public int GetMoneyChange() {
-		return (-1) * 1000 * DistanceInKm;
-	}
-
-	override public int GetHPChange() {
-		return 5 * DistanceInKm;
-	}
-	override public float GetTimeChange() {
-		if(TaxiSpeedInKPH != null)
-			return DistanceInKm / TaxiSpeedInKPH.Value;
-		return 0;
+    override public int GetHPChange()
+    {
+        return 5 * DistanceInKm;
+    }
+    override public float GetTimeChange()
+    {
+        return DistanceInKm / TaxiSpeedInKPH;
     }
 }
 
-class OnFootConnection: Connection {
-	public OnFootConnection(Station targetStation, int distanceInKm)
-		: base(targetStation, distanceInKm) {}
+class OnFootConnection : Connection
+{
+    public OnFootConnection(Station targetStation, int distanceInKm)
+        : base(targetStation, distanceInKm) { }
 
-	override public int GetMoneyChange() {
-		return 0;
-	}
+    override public int GetMoneyChange()
+    {
+        return 0;
+    }
 
-	override public int GetHPChange() {
-		return (-1) * 10 * DistanceInKm;
-	}
-	override public float GetTimeChange() {
-		return DistanceInKm / 5.5f;
+    override public int GetHPChange()
+    {
+        return (-1) * 10 * DistanceInKm;
+    }
+    override public float GetTimeChange()
+    {
+        return DistanceInKm / 5.5f;
     }
 }
