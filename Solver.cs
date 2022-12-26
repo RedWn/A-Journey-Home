@@ -9,12 +9,12 @@ static class Solver
 
     public static void Solve(State initialState, IComparer<StateInfo> comparer)
     {
-        PriorityQueue<State, StateInfo> _queue = new(comparer);
+        PriorityQueue<State, float> _queue = new();
         _stopWatch.Start();
 
         State? finalState = null;
         _parents[initialState] = null;
-        _queue.Enqueue(initialState, new StateInfo(initialState.TimeSpent, initialState.AvailableHP, initialState.AvailableMoney));
+        _queue.Enqueue(initialState, 0);
 
         bool shouldBreakLoop = false;
 
@@ -27,10 +27,14 @@ static class Solver
             _visited.Add(state);
             _numberOfVisitedNodes++;
 
-            List<State> nextStates = state.GetNextStates();
+            Tuple<List<State>, List<Connection>> nextAll = state.GetNextMoves();
+            List<State> nextStates = nextAll.Item1;
+            List<Connection> nextConnections = nextAll.Item2;
+            int i = 0;
             foreach (State nextState in nextStates)
             {
-                var priority = new StateInfo(nextState.TimeSpent, nextState.AvailableHP, nextState.AvailableMoney);
+                // var priority = new StateInfo(nextState.TimeSpent, nextState.AvailableHP, nextState.AvailableMoney);
+                var priority = getCost(nextConnections[i]) + getHeuristics(state.Station, nextConnections[i++]);
                 _queue.Enqueue(nextState, priority);
                 _parents[nextState] = state;
 
@@ -70,6 +74,20 @@ static class Solver
             Console.WriteLine();
         }
 
-        Console.WriteLine("Home... after 5 years on the east cost, it was time to go home.");
+        Console.WriteLine("Home... after 5 years on the east cost, it was time to go home."); //CJ
+    }
+
+    private static float getCost(Connection C)
+    {
+        //Every quest should have this function rewritten 
+        return C.GetTimeChange();
+    }
+
+    private static float getHeuristics(Station S, Connection C)
+    {
+        //Every quest should ALSO have this function rewritten
+        float distance = MathF.Sqrt(MathF.Pow(C.TargetStation.location.y - S.location.y, 2) + MathF.Pow(C.TargetStation.location.x - S.location.x, 2));
+        float time = distance / C.getSpeed();
+        return time;
     }
 }
