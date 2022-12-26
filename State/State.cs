@@ -8,7 +8,7 @@ class State
 
     public Connection? PreviousConnection = null;
 
-	public State(Station station, float timeSpent, int hp, int money)
+    public State(Station station, float timeSpent, int hp, int money)
     {
         Station = station;
         TimeSpent = timeSpent;
@@ -32,9 +32,10 @@ class State
         PreviousConnection = connection;
     }
 
-    public List<State> GetNextStates()
+    public Tuple<List<State>, List<Connection>> GetNextMoves()
     {
-        List<State> nextStates = new List<State>();
+        List<State> nextStates = new();
+        List<Connection> nextConnections = new();
 
         foreach (Connection connection in Station.Connections)
         {
@@ -43,15 +44,16 @@ class State
                 State stateClone = Clone();
                 stateClone.GoThroughPath(connection);
                 nextStates.Add(stateClone);
+                nextConnections.Add(connection);
             }
         }
 
-        return nextStates;
+        return Tuple.Create(nextStates, nextConnections);
     }
 
     private bool canTakeConnection(Connection connection)
     {
-        
+
         bool isStudentRidingTheSameBus = PreviousConnection?.BusRouteName == connection.BusRouteName;
 
         int futureMoney = !isStudentRidingTheSameBus ? AvailableMoney + connection.GetMoneyChange() : AvailableMoney;
