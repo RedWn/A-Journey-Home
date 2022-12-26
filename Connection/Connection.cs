@@ -1,10 +1,11 @@
-abstract class Connection {
-	public Station TargetStation;
+abstract class Connection
+{
+    public Station TargetStation;
     public ConnectionType Type;
     public string? BusRouteName;
 
-	protected float SpeedInKPH;
-	protected int DistanceInKm;
+    protected float SpeedInKPH;
+    protected int DistanceInKm;
 
     protected Connection(Station targetStation, int distanceInKm, float speedInKph)
     {
@@ -20,6 +21,10 @@ abstract class Connection {
 
     public abstract int GetMoneyChange();
     public abstract int GetHPChange();
+    public float getSpeed()
+    {
+        return SpeedInKPH;
+    }
 }
 
 class BusConnection : Connection
