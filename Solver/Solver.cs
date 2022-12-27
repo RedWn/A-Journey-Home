@@ -33,7 +33,7 @@ static class Solver
 
             foreach (State nextState in state.GetNextStates())
             {
-                var priority = new StatePriority(nextState.TimeSpent, nextState.AvailableHP, nextState.AvailableMoney, getTimeHeuristics(state.Station, Program.HOME_STATION));
+                var priority = new StatePriority(nextState.TimeSpent, nextState.AvailableHP, nextState.AvailableMoney, heuristicCalculator(nextState.Station, Program.HOME_STATION));
                 _queue.Enqueue(nextState, priority);
                 _parents[nextState] = state;
 
