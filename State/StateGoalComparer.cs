@@ -11,6 +11,16 @@ public class BestTimeGoal : IComparer<StateInfo>
     }
 }
 
+public class BestMoneyGoal : IComparer<StateInfo>
+{
+    public int Compare(StateInfo x, StateInfo y)
+    {
+        if (x.AvailableMoney + x.heuristic == y.AvailableMoney + y.heuristic) return 0;
+        if (x.AvailableMoney + x.heuristic < y.AvailableMoney + y.heuristic) return -1; // Choose first parameter
+        return 1; // Choose second parameter
+    }
+}
+
 public class BestHPGoal : IComparer<StateInfo>
 {
     public int Compare(StateInfo x, StateInfo y)
