@@ -25,8 +25,8 @@ public class BestHPGoal : IComparer<StateInfo>
 {
     public int Compare(StateInfo x, StateInfo y)
     {
-        if (x.AvailableHP == y.AvailableHP) return 0;
-        if (x.AvailableHP < y.AvailableHP) return -1; // Choose first parameter
+        if (x.AvailableHP + x.heuristic == y.AvailableHP + y.heuristic) return 0;
+        if (x.AvailableHP + x.heuristic < y.AvailableHP + y.heuristic) return -1; // Choose first parameter
         return 1; // Choose second parameter
     }
 }
