@@ -32,7 +32,7 @@ class State
         PreviousConnection = connection;
     }
 
-    public Tuple<List<State>, List<Connection>> GetNextMoves()
+    public List<State> GetNextStation()
     {
         List<State> nextStates = new();
         List<Connection> nextConnections = new();
@@ -44,11 +44,10 @@ class State
                 State stateClone = Clone();
                 stateClone.GoThroughPath(connection);
                 nextStates.Add(stateClone);
-                nextConnections.Add(connection);
             }
         }
 
-        return Tuple.Create(nextStates, nextConnections);
+        return nextStates;
     }
 
     private bool canTakeConnection(Connection connection)
