@@ -33,7 +33,7 @@ static class Solver
             int i = 0;
             foreach (State nextState in nextStates)
             {
-                var priority = new StateInfo(nextState.TimeSpent, nextState.AvailableHP, nextState.AvailableMoney, getHeuristics(state.Station, nextConnections[i++]));
+                var priority = new StateInfo(nextState.TimeSpent, nextState.AvailableHP, nextState.AvailableMoney, getTimeHeuristics(state.Station, nextConnections[i++]));
                 _queue.Enqueue(nextState, priority);
                 _parents[nextState] = state;
 
@@ -76,13 +76,7 @@ static class Solver
         Console.WriteLine("Home... after 5 years on the east cost, it was time to go home."); //CJ
     }
 
-    private static float getCost(Connection C)
-    {
-        //Every quest should have this function rewritten 
-        return C.GetTimeChange();
-    }
-
-    private static float getHeuristics(Station S, Connection C)
+    private static float getTimeHeuristics(Station S, Connection C)
     {
         //Every quest should ALSO have this function rewritten
         float distance = MathF.Sqrt(MathF.Pow(C.TargetStation.location.y - S.location.y, 2) + MathF.Pow(C.TargetStation.location.x - S.location.x, 2));
