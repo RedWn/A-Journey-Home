@@ -1,23 +1,27 @@
 ﻿class Program
 {
     public static Station? HOME_STATION;
+    
 
     public static void Main()
     {
-        // will need a rewrite to accomodate the new location requirment
-        // Station university = new Station("university", 1, 1);
-        // Station jaramana = new Station("jaramana", 1, 1);
-        // Station karajElSet = new Station("karaj el set", 1, 1);
+        Heuristics.HeuristicCalculator c = Heuristics.timeHeuristic;
 
-        // HOME_STATION = new Station("rukn al dein", 1, 1);
+        //will need a rewrite to accomodate the new location requirment
 
-        // university.AddConnection(ConnectionType.BUS, jaramana, 1, 2, "unimana");
-        // jaramana.AddConnection(ConnectionType.BUS, karajElSet, 1, 3, "jarElSet");
-        // karajElSet.AddConnection(ConnectionType.BUS, HOME_STATION, 1, 2.5f, "karajElBeit");
+        //Station university = new Station("university", 1, 1, new StationLocation(1, 2));
+        //Station jaramana = new Station("jaramana", 1, 1);
+        //Station karajElSet = new Station("karaj el set", 1, 1);
 
-        // State initialState = new State(station: university, timeSpent: 0, hp: 100, money: 1500);
+        //HOME_STATION = new Station("rukn al dein", 1, 1);
 
-        // IComparer<StateInfo> comparer = new BestTimeGoal();
-        // Solver.Solve(initialState, comparer);
+        //university.AddConnection(ConnectionType.BUS, jaramana, 1, 2, "unimana");
+        //jaramana.AddConnection(ConnectionType.BUS, karajElSet, 1, 3, "jarElSet");
+        //karajElSet.AddConnection(ConnectionType.BUS, HOME_STATION, 1, 2.5f, "karajElBeit");
+
+        //State initialState = new State(station: university, timeSpent: 0, hp: 100, money: 1500);
+
+        //IComparer<StatePriority> comparer = new BestTimeGoal();
+        //Solver.Solve(initialState, comparer, c);
     }
 }
