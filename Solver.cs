@@ -9,12 +9,12 @@ static class Solver
 
     public static void Solve(State initialState, IComparer<StateInfo> comparer)
     {
-        PriorityQueue<State, float> _queue = new();
+        PriorityQueue<State, StateInfo> _queue = new();
         _stopWatch.Start();
 
         State? finalState = null;
         _parents[initialState] = null;
-        _queue.Enqueue(initialState, 0);
+        _queue.Enqueue(initialState, new StateInfo(initialState.TimeSpent, initialState.AvailableHP, initialState.AvailableMoney, 0));
 
         bool shouldBreakLoop = false;
 
@@ -33,8 +33,7 @@ static class Solver
             int i = 0;
             foreach (State nextState in nextStates)
             {
-                // var priority = new StateInfo(nextState.TimeSpent, nextState.AvailableHP, nextState.AvailableMoney);
-                var priority = getCost(nextConnections[i]) + getHeuristics(state.Station, nextConnections[i++]);
+                var priority = new StateInfo(nextState.TimeSpent, nextState.AvailableHP, nextState.AvailableMoney, getHeuristics(state.Station, nextConnections[i++]));
                 _queue.Enqueue(nextState, priority);
                 _parents[nextState] = state;
 

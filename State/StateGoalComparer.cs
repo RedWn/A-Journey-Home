@@ -5,8 +5,8 @@ public class BestTimeGoal : IComparer<StateInfo>
 
     public int Compare(StateInfo x, StateInfo y)
     {
-        if (x.TimeSpent == y.TimeSpent) return 0;
-        if (x.TimeSpent < y.TimeSpent) return -1; // Choose first parameter
+        if (x.TimeSpent + x.heuristic == y.TimeSpent + y.heuristic) return 0;
+        if (x.TimeSpent + x.heuristic < y.TimeSpent + y.heuristic) return -1; // Choose first parameter
         return 1; // Choose second parameter
     }
 }
