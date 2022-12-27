@@ -27,13 +27,10 @@ static class Solver
             _visited.Add(state);
             _numberOfVisitedNodes++;
 
-            Tuple<List<State>, List<Connection>> nextAll = state.GetNextMoves();
-            List<State> nextStates = nextAll.Item1;
-            List<Connection> nextConnections = nextAll.Item2;
-            int i = 0;
+            List<State> nextStates = state.GetNextStation();
             foreach (State nextState in nextStates)
             {
-                var priority = new StateInfo(nextState.TimeSpent, nextState.AvailableHP, nextState.AvailableMoney, getTimeHeuristics(state.Station, nextConnections[i++]));
+                var priority = new StateInfo(nextState.TimeSpent, nextState.AvailableHP, nextState.AvailableMoney, getTimeHeuristics(state.Station, Program.HOME_STATION));
                 _queue.Enqueue(nextState, priority);
                 _parents[nextState] = state;
 
@@ -76,11 +73,28 @@ static class Solver
         Console.WriteLine("Home... after 5 years on the east cost, it was time to go home."); //CJ
     }
 
-    private static float getTimeHeuristics(Station S, Connection C)
+    //Heuristics here are still plug and play and can't be changed in runtime, we need to find the a walkaround or live life as is
+    private static float getTimeHeuristics(Station S1, Station S2)
     {
         //Every quest should ALSO have this function rewritten
-        float distance = MathF.Sqrt(MathF.Pow(C.TargetStation.location.y - S.location.y, 2) + MathF.Pow(C.TargetStation.location.x - S.location.x, 2));
-        float time = distance / C.getSpeed();
+        float distance = MathF.Sqrt(MathF.Pow(S2.location.y - S1.location.y, 2) + MathF.Pow(S2.location.x - S1.location.x, 2));
+        float time = distance / 45; //45 is an arbitrary number that happens to be the mean speed of vehicle transportation downtown
         return time;
+    }
+
+    private static float getHPHeuristics(Station S, Station S2)
+    {
+        //Every quest should ALSO have this function rewritten
+        float distance = MathF.Sqrt(MathF.Pow(S2.location.y - S.location.y, 2) + MathF.Pow(S2.location.x - S.location.x, 2));
+        float dHP = distance * -3.4f; //-3.4 HP per KM is the average of HP differential between -10 for walking, -5 for buses and +5 for taxis 
+        return dHP;
+    }
+
+    private static float getMoneyHeuristics(Station S, Station S2)
+    {
+        //Every quest should ALSO have this function rewritten
+        float distance = MathF.Sqrt(MathF.Pow(S2.location.y - S.location.y, 2) + MathF.Pow(S2.location.x - S.location.x, 2));
+        float money = distance * -1000; //TODO: get a realistic number to put here
+        return money;
     }
 }
