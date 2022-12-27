@@ -32,10 +32,9 @@ class State
         PreviousConnection = connection;
     }
 
-    public List<State> GetNextStation()
+    public List<State> GetNextStates()
     {
         List<State> nextStates = new();
-        List<Connection> nextConnections = new();
 
         foreach (Connection connection in Station.Connections)
         {

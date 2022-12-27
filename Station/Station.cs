@@ -1,19 +1,18 @@
 class Station
 {
     public readonly string Name;
+    public readonly int TaxiWaitTime;
+    public readonly int BusWaitTime;
 
-    public int TaxiWaitTime { get; private set; }
-    public int BusWaitTime { get; private set; }
-    public Location location = new Location();
+    public readonly StationLocation Location;
+    public readonly List<Connection> Connections;
 
-    public List<Connection> Connections;
-
-    public Station(string name, int taxiWaitTime, int busWaitTime, Location l)
+    public Station(string name, int taxiWaitTime, int busWaitTime, StationLocation location)
     {
         Name = name;
         TaxiWaitTime = taxiWaitTime;
         BusWaitTime = busWaitTime;
-        location = l;
+        Location = location;
 
         Connections = new List<Connection>();
     }
@@ -37,5 +36,14 @@ class Station
         }
 
         return 0;
+    }
+
+    public float CalculateGeographicalDistanceToStation(Station s)
+    {
+        // Simple euclidean distance calculation
+        float distanceYSquared = MathF.Pow(Location.x - s.Location.x, 2);
+        float distanceXSquared = MathF.Pow(Location.y - s.Location.y, 2);
+
+        return MathF.Sqrt(distanceXSquared + distanceYSquared);
     }
 }

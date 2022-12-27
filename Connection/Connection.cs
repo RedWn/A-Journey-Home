@@ -21,10 +21,6 @@ abstract class Connection
 
     public abstract int GetMoneyChange();
     public abstract int GetHPChange();
-    public float getSpeed()
-    {
-        return SpeedInKPH;
-    }
 }
 
 class BusConnection : Connection
@@ -34,7 +30,6 @@ class BusConnection : Connection
         Type = ConnectionType.BUS;
         BusRouteName = routeName;
     }
-
 
     override public int GetMoneyChange()
     {
@@ -53,8 +48,6 @@ class TaxiConnection : Connection
     {
         Type = ConnectionType.TAXI;
     }
-
-
     override public int GetMoneyChange()
     {
         return (-1) * 1000 * DistanceInKm;
