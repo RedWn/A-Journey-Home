@@ -73,7 +73,6 @@ static class Solver
         Console.WriteLine("Home... after 5 years on the east cost, it was time to go home."); //CJ
     }
 
-    #region Heuristics
     //Heuristics here are still plug and play and can't be changed in runtime, we need to find the a walkaround or live life as is
     private static float getTimeHeuristics(Station S1, Station S2)
     {
@@ -98,5 +97,4 @@ static class Solver
         float money = distance * -1000; //TODO: get a realistic number to put here
         return money;
     }
-    #endregion
 }
