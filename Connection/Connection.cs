@@ -50,7 +50,7 @@ class TaxiConnection : Connection
     }
     override public float GetMoneyChange()
     {
-        return (-1) * 1000 * DistanceInKm;
+        return -1000 * DistanceInKm;
     }
 
     override public float GetHPChange()
