@@ -9,7 +9,7 @@
         Station grandmother_garage = new Station("Grandmother Garage", 10 / 60, 5 / 60, new StationLocation(501, 308));
         Station the_hardworker = new Station("The Hardworker", 2 / 60, 30 / 60, new StationLocation(500, 295));
         Station coalers = new Station("Coalers", 2 / 60, 2 / 60, new StationLocation(508, 294)); ;
-        Station kafrsoose = new Station("Kafrsoose", 2, 10 / 60, new StationLocation(494, 273));
+        Station tartar_blasphemy = new Station("Tartar Blasphemy", 2, 10 / 60, new StationLocation(494, 273));
         Station president_bridge = new Station("The President Bridge", 10 / 60, 15 / 60, new StationLocation(512, 288));
         Station the_square = new Station("Ummayyad Square", 10 / 60, 20 / 60, new StationLocation(513, 276));
         Station immigrants = new Station("The Immigrants", 10 / 60, 20 / 60, new StationLocation(521, 273));
@@ -24,15 +24,15 @@
         grandmother_garage.AddConnection(ConnectionType.TAXI, coalers, grandmother_garage.CalcGeoDistTo(coalers), 40);
         grandmother_garage.AddConnection(ConnectionType.BUS, the_hardworker, grandmother_garage.CalcGeoDistTo(the_hardworker), 20, "industry");
         the_hardworker.AddConnection(ConnectionType.BUS, grandmother_garage, the_hardworker.CalcGeoDistTo(coalers), 20, "industry");
-        the_hardworker.AddConnection(ConnectionType.TAXI, kafrsoose, the_hardworker.CalcGeoDistTo(kafrsoose), 40);
+        the_hardworker.AddConnection(ConnectionType.TAXI, tartar_blasphemy, the_hardworker.CalcGeoDistTo(tartar_blasphemy), 40);
         the_hardworker.AddConnection(ConnectionType.TAXI, the_square, the_hardworker.CalcGeoDistTo(the_square), 40);
         the_hardworker.AddConnection(ConnectionType.TAXI, beautiful_woman, the_hardworker.CalcGeoDistTo(beautiful_woman), 40);
-        coalers.AddConnection(ConnectionType.TAXI, kafrsoose, coalers.CalcGeoDistTo(kafrsoose), 40);
+        coalers.AddConnection(ConnectionType.TAXI, tartar_blasphemy, coalers.CalcGeoDistTo(tartar_blasphemy), 40);
         coalers.AddConnection(ConnectionType.BUS, president_bridge, coalers.CalcGeoDistTo(president_bridge), 20, "industry");
         president_bridge.AddConnection(ConnectionType.BUS, the_square, president_bridge.CalcGeoDistTo(the_square), 20, "shitty");
         president_bridge.AddConnection(ConnectionType.BUS, the_garden, president_bridge.CalcGeoDistTo(the_garden), 20, "industry");
         president_bridge.AddConnection(ConnectionType.TAXI, corn_square, president_bridge.CalcGeoDistTo(corn_square), 40);
-        kafrsoose.AddConnection(ConnectionType.TAXI, the_square, kafrsoose.CalcGeoDistTo(the_square), 40);
+        tartar_blasphemy.AddConnection(ConnectionType.TAXI, the_square, tartar_blasphemy.CalcGeoDistTo(the_square), 40);
         the_square.AddConnection(ConnectionType.BUS, immigrants, the_square.CalcGeoDistTo(immigrants), 20, "circler");
         the_square.AddConnection(ConnectionType.BUS, consolation, the_square.CalcGeoDistTo(consolation), 20, "shitty");
         the_garden.AddConnection(ConnectionType.TAXI, corn_square, the_garden.CalcGeoDistTo(corn_square), 40);
