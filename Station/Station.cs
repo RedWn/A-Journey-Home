@@ -1,13 +1,13 @@
 class Station
 {
     public readonly string Name;
-    public readonly int TaxiWaitTime;
-    public readonly int BusWaitTime;
+    public readonly float TaxiWaitTime;
+    public readonly float BusWaitTime;
 
     public readonly StationLocation Location;
     public readonly List<Connection> Connections;
 
-    public Station(string name, int taxiWaitTime, int busWaitTime, StationLocation location)
+    public Station(string name, float taxiWaitTime, float busWaitTime, StationLocation location)
     {
         Name = name;
         TaxiWaitTime = taxiWaitTime;
@@ -23,7 +23,7 @@ class Station
         Connections.Add(connection);
     }
 
-    public int GetWaitingTime(Connection connection)
+    public float GetWaitingTime(Connection connection)
     {
         if (connection.Type == ConnectionType.BUS)
         {
