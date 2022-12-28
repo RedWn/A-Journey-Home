@@ -85,4 +85,8 @@ class State
             PreviousConnection = this.PreviousConnection
         };
     }
+    public string getHash()
+    {
+        return Station.Name + TimeSpentInHours + AvailableHP + AvailableMoney;
+    }
 }

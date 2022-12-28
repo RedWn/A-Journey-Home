@@ -3,7 +3,7 @@ using System.Diagnostics;
 static class Solver
 {
     private static Dictionary<State, State?> _parents = new();
-    private static HashSet<State> _visited = new();
+    private static HashSet<string> _visited = new();
     private static Stopwatch _stopWatch = new();
     private static int _numberOfVisitedNodes = 0;
 
@@ -19,30 +19,31 @@ static class Solver
         var initialStatePriority = new StatePriority(initialState.TimeSpentInHours, initialState.AvailableHP, initialState.AvailableMoney, 0);
         _queue.Enqueue(initialState, initialStatePriority);
 
-        bool shouldBreakLoop = false;
-
         while (_queue.Count > 0)
         {
-            if (shouldBreakLoop) break;
-
             State state = _queue.Dequeue();
-            if (_visited.Contains(state)) continue;
+            if (state.IsFinal())
+            {
+                if (finalState is null)
+                    finalState = state;
+                else
+                {
+                    var finalpriority = new StatePriority(finalState.TimeSpentInHours, finalState.AvailableHP, finalState.AvailableMoney, heuristicCalculator(finalState.Station, Program.HOME_STATION));
+                    var priority = new StatePriority(state.TimeSpentInHours, state.AvailableHP, state.AvailableMoney, heuristicCalculator(state.Station, Program.HOME_STATION));
+                    if (comparer.Compare(finalpriority, priority) == 1)
+                        finalState = state;
+                }
+            }
 
-            _visited.Add(state);
+            _visited.Add(state.getHash());
             _numberOfVisitedNodes++;
 
             foreach (State nextState in state.GetNextStates())
             {
+                if (_visited.Contains(nextState.getHash())) continue;
                 var priority = new StatePriority(nextState.TimeSpentInHours, nextState.AvailableHP, nextState.AvailableMoney, heuristicCalculator(nextState.Station, Program.HOME_STATION));
                 _queue.Enqueue(nextState, priority);
                 _parents[nextState] = state;
-
-                if (nextState.IsFinal())
-                {
-                    shouldBreakLoop = true;
-                    finalState = nextState;
-                    break;
-                }
             }
         }
 
