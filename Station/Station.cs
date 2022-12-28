@@ -21,6 +21,8 @@ class Station
     {
         Connection connection = ConnectionFactory.GetConnection(type, targetStation, distanceInKm, speedInKph, routeName);
         Connections.Add(connection);
+        connection = ConnectionFactory.GetConnection(ConnectionType.ON_FOOT, targetStation, distanceInKm, 5.5f);
+        Connections.Add(connection);
     }
 
     public float GetWaitingTime(Connection connection)
