@@ -69,7 +69,7 @@ static class Solver
         {
             var state = statesPath.Pop();
             Console.WriteLine($"Station: {state.Station.Name} - {state.PreviousConnection?.Type}");
-            Console.WriteLine($"HP: {state.AvailableHP}, Time Spent: {state.TimeSpent}, Money: {state.AvailableMoney}");
+            Console.WriteLine($"HP: {state.AvailableHP}, Time Spent: {state.TimeSpent * 60}, Money: {state.AvailableMoney}");
             Console.WriteLine();
         }
 
