@@ -26,8 +26,11 @@ class State
         {
             AvailableMoney += Convert.ToInt32(MathF.Ceiling(connection.GetMoneyChange()));
         }
-
-        TimeSpent += connection.GetTimeChange() + Station.GetWaitingTime(connection);
+        if (!isStudentRidingTheSameBus)
+        {
+            TimeSpent += Station.GetWaitingTime(connection);
+        }
+        TimeSpent += connection.GetTimeChange();
         AvailableHP += Convert.ToInt32(MathF.Ceiling(connection.GetHPChange()));
 
         PreviousConnection = connection;
