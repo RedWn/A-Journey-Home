@@ -20,11 +20,12 @@ class State
     {
         Station = connection.TargetStation;
 
-        bool isStudentRidingTheSameBus = PreviousConnection?.BusRouteName == connection.BusRouteName;
-        // if (!isStudentRidingTheSameBus) this needs fixing for connections with null route name
-        // {
-        AvailableMoney += Convert.ToInt32(MathF.Ceiling(connection.GetMoneyChange()));
-        // }
+        bool previousAndNextConnectionsAreBuses = connection.Type == ConnectionType.BUS && PreviousConnection?.Type == ConnectionType.BUS;
+        bool isStudentRidingTheSameBus = previousAndNextConnectionsAreBuses && PreviousConnection?.BusRouteName == connection.BusRouteName;
+        if (!isStudentRidingTheSameBus)
+        {
+            AvailableMoney += Convert.ToInt32(MathF.Ceiling(connection.GetMoneyChange()));
+        }
 
         TimeSpent += connection.GetTimeChange() + Station.GetWaitingTime(connection);
         AvailableHP += Convert.ToInt32(MathF.Ceiling(connection.GetHPChange()));
