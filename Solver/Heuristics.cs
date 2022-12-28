@@ -6,7 +6,7 @@
     {
         float distance = a.CalcGeoDistTo(b);
 
-        float MEAN_SPEED_OF_VEHICLE_TRANSPORTATION = 45.0f;
+        float MEAN_SPEED_OF_VEHICLE_TRANSPORTATION = 22.0f;
         float time = distance / MEAN_SPEED_OF_VEHICLE_TRANSPORTATION;
 
         return time;
