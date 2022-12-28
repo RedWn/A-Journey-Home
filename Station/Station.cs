@@ -38,12 +38,12 @@ class Station
         return 0;
     }
 
-    public float CalculateGeographicalDistanceToStation(Station s)
+    public float CalcGeoDistTo(Station s)
     {
         // Simple euclidean distance calculation
         float distanceYSquared = MathF.Pow(Location.x - s.Location.x, 2);
         float distanceXSquared = MathF.Pow(Location.y - s.Location.y, 2);
 
-        return MathF.Sqrt(distanceXSquared + distanceYSquared);
+        return MathF.Sqrt(distanceXSquared + distanceYSquared) * 0.1f; //0.1 is to convert from coordinates to KM
     }
 }
