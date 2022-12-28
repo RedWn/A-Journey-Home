@@ -5,9 +5,9 @@ abstract class Connection
     public string? BusRouteName;
 
     protected float SpeedInKPH;
-    protected int DistanceInKm;
+    protected float DistanceInKm;
 
-    protected Connection(Station targetStation, int distanceInKm, float speedInKph)
+    protected Connection(Station targetStation, float distanceInKm, float speedInKph)
     {
         TargetStation = targetStation;
         DistanceInKm = distanceInKm;
@@ -19,24 +19,24 @@ abstract class Connection
         return DistanceInKm / SpeedInKPH;
     }
 
-    public abstract int GetMoneyChange();
-    public abstract int GetHPChange();
+    public abstract float GetMoneyChange();
+    public abstract float GetHPChange();
 }
 
 class BusConnection : Connection
 {
-    public BusConnection(Station targetStation, int distanceInKm, float speedInKph, string routeName) : base(targetStation, distanceInKm, speedInKph)
+    public BusConnection(Station targetStation, float distanceInKm, float speedInKph, string routeName) : base(targetStation, distanceInKm, speedInKph)
     {
         Type = ConnectionType.BUS;
         BusRouteName = routeName;
     }
 
-    override public int GetMoneyChange()
+    override public float GetMoneyChange()
     {
         return -400;
     }
 
-    override public int GetHPChange()
+    override public float GetHPChange()
     {
         return -5 * DistanceInKm;
     }
@@ -44,16 +44,16 @@ class BusConnection : Connection
 
 class TaxiConnection : Connection
 {
-    public TaxiConnection(Station targetStation, int distanceInKm, float speedInKph) : base(targetStation, distanceInKm, speedInKph)
+    public TaxiConnection(Station targetStation, float distanceInKm, float speedInKph) : base(targetStation, distanceInKm, speedInKph)
     {
         Type = ConnectionType.TAXI;
     }
-    override public int GetMoneyChange()
+    override public float GetMoneyChange()
     {
         return (-1) * 1000 * DistanceInKm;
     }
 
-    override public int GetHPChange()
+    override public float GetHPChange()
     {
         return 5 * DistanceInKm;
     }
@@ -61,17 +61,17 @@ class TaxiConnection : Connection
 
 class OnFootConnection : Connection
 {
-    public OnFootConnection(Station targetStation, int distanceInKm, float speedInKph) : base(targetStation, distanceInKm, speedInKph)
+    public OnFootConnection(Station targetStation, float distanceInKm, float speedInKph) : base(targetStation, distanceInKm, speedInKph)
     {
         Type = ConnectionType.ON_FOOT;
     }
 
-    override public int GetMoneyChange()
+    override public float GetMoneyChange()
     {
         return 0;
     }
 
-    override public int GetHPChange()
+    override public float GetHPChange()
     {
         return (-1) * 10 * DistanceInKm;
     }

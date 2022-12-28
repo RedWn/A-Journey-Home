@@ -1,6 +1,6 @@
 ﻿static class ConnectionFactory
 {
-   public static Connection GetConnection(ConnectionType type, Station targetStation, int distanceInKm, float speedInKph, string routeName = "")
+    public static Connection GetConnection(ConnectionType type, Station targetStation, float distanceInKm, float speedInKph, string routeName = "")
     {
         return type switch
         {
@@ -11,4 +11,4 @@
         };
     }
 }
- 
+
