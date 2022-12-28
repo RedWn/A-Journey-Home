@@ -26,7 +26,7 @@
     {
         float distance = a.CalcGeoDistTo(b);
 
-        float money = distance * -1000; //TODO: get a reasonable number to put here 
+        float money = distance * -1000;
 
         return money;
     };
