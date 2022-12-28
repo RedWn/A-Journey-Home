@@ -6,8 +6,8 @@
     {
         float distance = a.CalcGeoDistTo(b);
 
-        float MEAN_SPEED_OF_VEHICLE_TRANSPORTATION = 22.0f;
-        float time = distance / MEAN_SPEED_OF_VEHICLE_TRANSPORTATION;
+        float AVERAGE_SPEED_OF_TRANSPORTATION = 22.0f;
+        float time = distance / AVERAGE_SPEED_OF_TRANSPORTATION;
 
         return time;
     };
@@ -29,5 +29,17 @@
         float money = distance * -1000;
 
         return money;
+    };
+
+    public static readonly HeuristicCalculator allHeuristic = (a, b) =>
+    {
+        float distance = a.CalcGeoDistTo(b);
+        float AVERAGE_HP_COST = -3.4f;
+        float AVERAGE_SPEED_OF_TRANSPORTATION = 22.0f;
+
+        //0.33 is to give all three metrics similar weights (I don't know if this is legit or habd)
+        float all = distance * -1000 * 0.33f + distance * AVERAGE_HP_COST * 0.33f + distance / AVERAGE_SPEED_OF_TRANSPORTATION * 0.33f;
+
+        return all;
     };
 }

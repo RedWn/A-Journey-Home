@@ -37,12 +37,21 @@ public class BestHPGoal : IComparer<StatePriority>
     }
 }
 
-public class BestTimeAndHPAndMoneyGoal : IComparer<StatePriority>
+public class BestAllGoal : IComparer<StatePriority> //this is testing ground and is not complete AT ALL
 {
     public int Compare(StatePriority x, StatePriority y)
     {
         if ((x.TimeSpent, x.AvailableHP, x.AvailableMoney) == (y.TimeSpent, y.AvailableHP, y.AvailableMoney)) return 0;
-        if ((x.TimeSpent < y.TimeSpent) && (x.AvailableHP > y.AvailableHP) && (x.AvailableMoney > y.AvailableMoney)) return -1;
-        return 0;
+        float dTimeSpentX = MathF.Pow(x.TimeSpent, 2);
+        float dAvailableHPX = MathF.Pow(x.AvailableHP, 2);
+        float dAvailableMoneyX = MathF.Pow(x.AvailableMoney, 2);
+        float bigDx = MathF.Sqrt(-dTimeSpentX + dAvailableHPX + dAvailableMoneyX);
+
+        float dTimeSpentY = MathF.Pow(y.TimeSpent, 2);
+        float dAvailableHPY = MathF.Pow(y.AvailableHP, 2);
+        float dAvailableMoneyY = MathF.Pow(y.AvailableMoney, 2);
+        float bigDy = MathF.Sqrt(-dTimeSpentY + dAvailableHPY + dAvailableMoneyY);
+        if (bigDx < bigDy) return -1;
+        return 1;
     }
 }
