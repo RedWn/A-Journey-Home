@@ -27,7 +27,7 @@ class State
         }
 
         TimeSpent += connection.GetTimeChange() + Station.GetWaitingTime(connection);
-        AvailableHP += connection.GetHPChange();
+        AvailableHP += Convert.ToInt32(MathF.Ceiling(connection.GetHPChange()));
 
         PreviousConnection = connection;
     }
@@ -54,8 +54,8 @@ class State
 
         bool isStudentRidingTheSameBus = PreviousConnection?.BusRouteName == connection.BusRouteName;
 
-        int futureMoney = !isStudentRidingTheSameBus ? AvailableMoney + connection.GetMoneyChange() : AvailableMoney;
-        int futureHp = AvailableHP + connection.GetHPChange();
+        int futureMoney = !isStudentRidingTheSameBus ? Convert.ToInt32(MathF.Ceiling(AvailableMoney + connection.GetMoneyChange())) : AvailableMoney;
+        int futureHp = Convert.ToInt32(MathF.Ceiling(AvailableHP + connection.GetHPChange()));
 
         //Console.WriteLine($"Future money: {futureMoney}, Future HP: {futureHp}");
 
