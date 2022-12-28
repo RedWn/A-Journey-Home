@@ -68,7 +68,7 @@ class State
 
         int futureHp = AvailableHP + Convert.ToInt32(MathF.Ceiling(connection.GetHPChange()));
 
-        Console.WriteLine($"Future money: {futureMoney} \t\t Future HP: {futureHp} \t\t Target Station: {connection.TargetStation.Name}");
+        //Console.WriteLine($"Future money: {futureMoney} \t\t Future HP: {futureHp} \t\t Target Station: {connection.TargetStation.Name}");
 
         return futureMoney >= 0 && futureHp > 0;
     }
@@ -80,6 +80,9 @@ class State
 
     public State Clone()
     {
-        return new State(Station, TimeSpentInHours, AvailableHP, AvailableMoney);
+        return new State(Station, TimeSpentInHours, AvailableHP, AvailableMoney)
+        {
+            PreviousConnection = this.PreviousConnection
+        };
     }
 }
