@@ -12,7 +12,7 @@ public class BestTimeGoal : IComparer<StatePriority>
     public int Compare(StatePriority x, StatePriority y)
     {
         if (x.TimeSpent + x.heuristic == y.TimeSpent + y.heuristic) return 0;
-        if (x.TimeSpent + x.heuristic < y.TimeSpent + y.heuristic) return -1; 
+        if (x.TimeSpent + x.heuristic < y.TimeSpent + y.heuristic) return -1;
         return 1;
     }
 }
@@ -22,7 +22,7 @@ public class BestMoneyGoal : IComparer<StatePriority>
     public int Compare(StatePriority x, StatePriority y)
     {
         if (x.AvailableMoney + x.heuristic == y.AvailableMoney + y.heuristic) return 0;
-        if (x.AvailableMoney + x.heuristic < y.AvailableMoney + y.heuristic) return -1; 
+        if (x.AvailableMoney + x.heuristic > y.AvailableMoney + y.heuristic) return -1;
         return 1;
     }
 }
@@ -32,7 +32,7 @@ public class BestHPGoal : IComparer<StatePriority>
     public int Compare(StatePriority x, StatePriority y)
     {
         if (x.AvailableHP + x.heuristic == y.AvailableHP + y.heuristic) return 0;
-        if (x.AvailableHP + x.heuristic < y.AvailableHP + y.heuristic) return -1; 
+        if (x.AvailableHP + x.heuristic > y.AvailableHP + y.heuristic) return -1;
         return 1;
     }
 }
