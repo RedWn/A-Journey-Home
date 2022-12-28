@@ -30,7 +30,7 @@ class Station
         // is a pain in the back. To ensure that we only have one ON_FOOT_CONNECTION for each targetStation,
         // we have the _onFootConnections HashSet.
 
-        Connection onFootConnection = ConnectionFactory.GetConnection(ConnectionType.ON_FOOT, targetStation, distanceInKm, speedInKph);
+        Connection onFootConnection = ConnectionFactory.GetConnection(ConnectionType.ON_FOOT, targetStation, distanceInKm, 5.5f);
         if (!_onFootConnections.Contains(onFootConnection))
         {
             Connections.Add(onFootConnection);
