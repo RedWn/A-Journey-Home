@@ -56,7 +56,8 @@ class State
     private bool canTakeConnection(Connection connection)
     {
 
-        bool isStudentRidingTheSameBus = PreviousConnection?.BusRouteName == connection.BusRouteName;
+        bool previousAndNextConnectionsAreBuses = connection.Type == ConnectionType.BUS && PreviousConnection?.Type == ConnectionType.BUS;
+        bool isStudentRidingTheSameBus = previousAndNextConnectionsAreBuses && PreviousConnection?.BusRouteName == connection.BusRouteName;
 
         int futureMoney = !isStudentRidingTheSameBus ? Convert.ToInt32(MathF.Ceiling(AvailableMoney + connection.GetMoneyChange())) : AvailableMoney;
         int futureHp = Convert.ToInt32(MathF.Ceiling(AvailableHP + connection.GetHPChange()));
