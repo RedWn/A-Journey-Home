@@ -2,7 +2,8 @@ class State
 {
     public Station Station;
 
-    public float TimeSpent;
+    public float TimeSpentInHours;
+
     public int AvailableHP;
     public int AvailableMoney;
 
@@ -11,26 +12,29 @@ class State
     public State(Station station, float timeSpent, int hp, int money)
     {
         Station = station;
-        TimeSpent = timeSpent;
+        TimeSpentInHours = timeSpent;
         AvailableHP = hp;
         AvailableMoney = money;
+    }
+
+    private bool isStudentRidingTheSameBus(Connection nextConnection)
+    {
+        bool previousAndNextConnectionsAreBuses = nextConnection.Type == ConnectionType.BUS && PreviousConnection?.Type == ConnectionType.BUS;
+
+        return previousAndNextConnectionsAreBuses && PreviousConnection?.BusRouteName == nextConnection.BusRouteName;
     }
 
     public void GoThroughPath(Connection connection)
     {
         Station = connection.TargetStation;
 
-        bool previousAndNextConnectionsAreBuses = connection.Type == ConnectionType.BUS && PreviousConnection?.Type == ConnectionType.BUS;
-        bool isStudentRidingTheSameBus = previousAndNextConnectionsAreBuses && PreviousConnection?.BusRouteName == connection.BusRouteName;
-        if (!isStudentRidingTheSameBus)
+        if (!isStudentRidingTheSameBus(connection))
         {
             AvailableMoney += Convert.ToInt32(MathF.Ceiling(connection.GetMoneyChange()));
+            TimeSpentInHours += Station.GetWaitingTime(connection);
         }
-        if (!isStudentRidingTheSameBus)
-        {
-            TimeSpent += Station.GetWaitingTime(connection);
-        }
-        TimeSpent += connection.GetTimeChange();
+
+        TimeSpentInHours += connection.GetTimeChange();
         AvailableHP += Convert.ToInt32(MathF.Ceiling(connection.GetHPChange()));
 
         PreviousConnection = connection;
@@ -55,14 +59,16 @@ class State
 
     private bool canTakeConnection(Connection connection)
     {
+        int futureMoney = AvailableMoney;
 
-        bool previousAndNextConnectionsAreBuses = connection.Type == ConnectionType.BUS && PreviousConnection?.Type == ConnectionType.BUS;
-        bool isStudentRidingTheSameBus = previousAndNextConnectionsAreBuses && PreviousConnection?.BusRouteName == connection.BusRouteName;
+        if (!isStudentRidingTheSameBus(connection))
+        {
+            futureMoney += Convert.ToInt32(MathF.Ceiling(connection.GetMoneyChange()));
+        }
 
-        int futureMoney = !isStudentRidingTheSameBus ? Convert.ToInt32(MathF.Ceiling(AvailableMoney + connection.GetMoneyChange())) : AvailableMoney;
-        int futureHp = Convert.ToInt32(MathF.Ceiling(AvailableHP + connection.GetHPChange()));
+        int futureHp = AvailableHP + Convert.ToInt32(MathF.Ceiling(connection.GetHPChange()));
 
-        //Console.WriteLine($"Future money: {futureMoney}, Future HP: {futureHp}");
+        Console.WriteLine($"Future money: {futureMoney} \t\t Future HP: {futureHp} \t\t Target Station: {connection.TargetStation.Name}");
 
         return futureMoney >= 0 && futureHp > 0;
     }
@@ -74,6 +80,6 @@ class State
 
     public State Clone()
     {
-        return new State(Station, TimeSpent, AvailableHP, AvailableMoney);
+        return new State(Station, TimeSpentInHours, AvailableHP, AvailableMoney);
     }
 }
