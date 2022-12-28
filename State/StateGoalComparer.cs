@@ -7,6 +7,7 @@
  *  1    : Choose second parameter
  **/
 
+using System.Numerics;
 public class BestTimeGoal : IComparer<StatePriority>
 {
     public int Compare(StatePriority x, StatePriority y)
@@ -42,16 +43,9 @@ public class BestAllGoal : IComparer<StatePriority> //this is testing ground and
     public int Compare(StatePriority x, StatePriority y)
     {
         if ((x.TimeSpent, x.AvailableHP, x.AvailableMoney) == (y.TimeSpent, y.AvailableHP, y.AvailableMoney)) return 0;
-        float dTimeSpentX = MathF.Pow(x.TimeSpent, 2);
-        float dAvailableHPX = MathF.Pow(x.AvailableHP, 2);
-        float dAvailableMoneyX = MathF.Pow(x.AvailableMoney, 2);
-        float bigDx = MathF.Sqrt(-dTimeSpentX + dAvailableHPX + dAvailableMoneyX);
-
-        float dTimeSpentY = MathF.Pow(y.TimeSpent, 2);
-        float dAvailableHPY = MathF.Pow(y.AvailableHP, 2);
-        float dAvailableMoneyY = MathF.Pow(y.AvailableMoney, 2);
-        float bigDy = MathF.Sqrt(-dTimeSpentY + dAvailableHPY + dAvailableMoneyY);
-        if (bigDx < bigDy) return -1;
+        Vector3 Vx = new Vector3(x.TimeSpent, x.AvailableHP, x.AvailableMoney);
+        Vector3 Vy = new Vector3(y.TimeSpent, y.AvailableHP, y.AvailableMoney);
+        if (Vx.Length() > Vy.Length()) return -1;
         return 1;
     }
 }
