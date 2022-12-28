@@ -15,11 +15,11 @@
         HOME_STATION = kafrsoose;
 
         university.AddConnection(ConnectionType.BUS, grandmother_garage, university.CalcGeoDistTo(grandmother_garage), 20, "industry");
-        grandmother_garage.AddConnection(ConnectionType.TAXI, coalers, grandmother_garage.CalcGeoDistTo(coalers), 45);
+        grandmother_garage.AddConnection(ConnectionType.TAXI, coalers, grandmother_garage.CalcGeoDistTo(coalers), 40);
         grandmother_garage.AddConnection(ConnectionType.BUS, the_hardworker, grandmother_garage.CalcGeoDistTo(the_hardworker), 20, "industry");
         the_hardworker.AddConnection(ConnectionType.BUS, grandmother_garage, the_hardworker.CalcGeoDistTo(coalers), 20, "industry");
-        the_hardworker.AddConnection(ConnectionType.TAXI, kafrsoose, the_hardworker.CalcGeoDistTo(kafrsoose), 45);
-        coalers.AddConnection(ConnectionType.TAXI, kafrsoose, coalers.CalcGeoDistTo(kafrsoose), 45);
+        the_hardworker.AddConnection(ConnectionType.TAXI, kafrsoose, the_hardworker.CalcGeoDistTo(kafrsoose), 40);
+        coalers.AddConnection(ConnectionType.TAXI, kafrsoose, coalers.CalcGeoDistTo(kafrsoose), 40);
 
         State initialState = new State(station: university, timeSpent: 0, hp: 100, money: 5000);
 
