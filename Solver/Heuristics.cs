@@ -38,7 +38,7 @@
         float MINIMUM_SPEED_OF_TRANSPORTATION = 5.5f;
 
         //0.33 is to give all three metrics similar weights (I don't know if this is legit or habd)
-        float all = distance * -1000 * 0.33f + distance * HP_COST * 0.33f + distance / MINIMUM_SPEED_OF_TRANSPORTATION * 0.33f;
+        float all = distance * (-1000 + HP_COST - 1 / MINIMUM_SPEED_OF_TRANSPORTATION);
 
         return all;
     };
