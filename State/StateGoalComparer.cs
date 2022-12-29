@@ -43,8 +43,10 @@ public class BestAllGoal : IComparer<StatePriority> //this is testing ground and
     public int Compare(StatePriority x, StatePriority y)
     {
         if ((x.TimeSpent, x.AvailableHP, x.AvailableMoney) == (y.TimeSpent, y.AvailableHP, y.AvailableMoney)) return 0;
-        Vector3 Vx = new Vector3(x.TimeSpent * 0.005f, x.AvailableHP * 0.1f, x.AvailableMoney * 0.001f);//the numbers 0.005, 0.1 and 0.001 are from my pocket please don't ask why they are as they are. 
-        Vector3 Vy = new Vector3(y.TimeSpent * 0.005f, y.AvailableHP * 0.1f, y.AvailableMoney * 0.001f);//the numbers 0.005, 0.1 and 0.001 are from my pocket please don't ask why they are as they are. 
+        /*the numbers 0.005, 0.1 and 0.001 are weights acquired through multiple tests and have no specific reasons,
+         I am more than happy if you can find better weights */
+        Vector3 Vx = new Vector3(x.TimeSpent * 0.005f, x.AvailableHP * 0.1f, x.AvailableMoney * 0.001f);
+        Vector3 Vy = new Vector3(y.TimeSpent * 0.005f, y.AvailableHP * 0.1f, y.AvailableMoney * 0.001f);
         if (Vx.Length() > Vy.Length()) return -1;
         return 1;
     }
