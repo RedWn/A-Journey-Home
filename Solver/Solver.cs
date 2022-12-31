@@ -52,6 +52,7 @@ static class Solver
 
         _stopWatch.Stop();
         if (finalState is not null) printSolutionDetails(finalState);
+        else Console.WriteLine("No possible routes found!");
     }
 
     private static void printSolutionDetails(State finalState)
