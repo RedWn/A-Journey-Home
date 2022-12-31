@@ -9,7 +9,6 @@
     public static readonly HeuristicCalculator timeHeuristic = (a, b) =>
     {
         float distance = a.CalcGeoDistTo(b);
-
         float time = distance / FASTEST_TRANSPORTATION_SPEED;
 
         return time;

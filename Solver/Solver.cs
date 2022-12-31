@@ -7,7 +7,7 @@ static class Solver
     private static readonly Dictionary<State, State?> _parents = new();
     private static int _numberOfVisitedNodes = 0;
 
-    public static void Solve(State initialState, IComparer<StatePriority> comparer, Heuristics.HeuristicCalculator heuristicCalculator)
+    private static void solve(State initialState, IComparer<StatePriority> comparer, Heuristics.HeuristicCalculator heuristicCalculator)
     {
         _stopWatch.Start();
 
@@ -27,15 +27,6 @@ static class Solver
             {
                 finalState = state;
                 break;
-                // if (finalState is null)
-                //     finalState = state;
-                // else
-                // {
-                //     var finalpriority = new StatePriority(finalState.TimeSpentInHours, finalState.AvailableHP, finalState.AvailableMoney, heuristicCalculator(finalState.Station, Program.HOME_STATION));
-                //     var priority = new StatePriority(state.TimeSpentInHours, state.AvailableHP, state.AvailableMoney, heuristicCalculator(state.Station, Program.HOME_STATION));
-                //     if (comparer.Compare(finalpriority, priority) == 1)
-                //         finalState = state;
-                // }
             }
 
             _visited.Add(state.GetHash());
@@ -53,6 +44,34 @@ static class Solver
         _stopWatch.Stop();
         if (finalState is not null) printSolutionDetails(finalState);
         else Console.WriteLine("No possible routes found!");
+    }
+
+    public static void SolveForBestTime(State initialState)
+    {
+        Heuristics.HeuristicCalculator h = Heuristics.timeHeuristic;
+        IComparer<StatePriority> comparer = new BestTimeGoal();
+        solve(initialState, comparer, h);
+    }
+
+    public static void SolveForBestHP(State initialState)
+    {
+        Heuristics.HeuristicCalculator h = Heuristics.hpHeuristic;
+        IComparer<StatePriority> comparer = new BestHPGoal();
+        solve(initialState, comparer, h);
+    }
+
+    public static void SolveForBestMoney(State initialState)
+    {
+        Heuristics.HeuristicCalculator h = Heuristics.moneyHeuristic;
+        IComparer<StatePriority> comparer = new BestMoneyGoal();
+        solve(initialState, comparer, h);
+    }
+
+    public static void SolveForAllBestConditions(State initialState)
+    {
+        Heuristics.HeuristicCalculator h = Heuristics.allHeuristic;
+        IComparer<StatePriority> comparer = new BestAllGoal();
+        solve(initialState, comparer, h);
     }
 
     private static void printSolutionDetails(State finalState)
