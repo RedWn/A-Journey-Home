@@ -87,6 +87,7 @@ class State
     }
     public string GetHash()
     {
+        // https://stackoverflow.com/questions/21078/most-efficient-way-to-concatenate-strings
         return String.Concat(Station.Name, TimeSpentInHours, AvailableHP, AvailableMoney);
     }
 }
