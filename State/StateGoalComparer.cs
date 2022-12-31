@@ -1,11 +1,10 @@
-﻿/**
- * Reference: Reference: https://dotnetcoretutorials.com/2021/03/17/priorityqueue-in-net/#:~:text=A%20Priority%20Queue%20is%20a,when%20it%20was%20put%20on.
+﻿// Reference: https://dotnetcoretutorials.com/2021/03/17/priorityqueue-in-net/#:~:text=A%20Priority%20Queue%20is%20a,when%20it%20was%20put%20on.
+/**
+ * Comparator return values quick reference: 
  * 
- * TL;DR: 
- * 
- *  Return 0    : Items are equal
- *  Return -1   : Choose first parameter
- *  Return 1    : Choose second parameter
+ *  0    : Items are equal
+ * -1    : Choose first parameter
+ *  1    : Choose second parameter
  **/
 
 using System.Numerics;

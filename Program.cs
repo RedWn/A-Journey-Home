@@ -60,9 +60,9 @@
         State initialState = new State(station: University, timeSpent: 0, hp: 50, money: 5000);
         HOME_STATION = ProjectDestroyed;
 
-        Heuristics.HeuristicCalculator c = Heuristics.timeHeuristic;
-        IComparer<StatePriority> comparer = new BestTimeGoal();
+        Heuristics.HeuristicCalculator h = Heuristics.hpHeuristic;
+        IComparer<StatePriority> comparer = new BestHPGoal();
 
-        Solver.Solve(initialState, comparer, c);
+        Solver.Solve(initialState, comparer, h);
     }
 }

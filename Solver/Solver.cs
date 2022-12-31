@@ -5,7 +5,6 @@ static class Solver
     private static readonly Stopwatch _stopWatch = new();
     private static readonly HashSet<string> _visited = new();
     private static readonly Dictionary<State, State?> _parents = new();
-
     private static int _numberOfVisitedNodes = 0;
 
     public static void Solve(State initialState, IComparer<StatePriority> comparer, Heuristics.HeuristicCalculator heuristicCalculator)
@@ -28,17 +27,15 @@ static class Solver
             {
                 finalState = state;
                 break;
-
-
-                //if (finalState is null)
-                //    finalState = state;
-                //else
-                //{
-                //    var finalpriority = new StatePriority(finalState.TimeSpentInHours, finalState.AvailableHP, finalState.AvailableMoney, heuristicCalculator(finalState.Station, Program.HOME_STATION));
-                //    var priority = new StatePriority(state.TimeSpentInHours, state.AvailableHP, state.AvailableMoney, heuristicCalculator(state.Station, Program.HOME_STATION));
-                //    if (comparer.Compare(finalpriority, priority) == 1)
-                //        finalState = state;
-                //}
+                // if (finalState is null)
+                //     finalState = state;
+                // else
+                // {
+                //     var finalpriority = new StatePriority(finalState.TimeSpentInHours, finalState.AvailableHP, finalState.AvailableMoney, heuristicCalculator(finalState.Station, Program.HOME_STATION));
+                //     var priority = new StatePriority(state.TimeSpentInHours, state.AvailableHP, state.AvailableMoney, heuristicCalculator(state.Station, Program.HOME_STATION));
+                //     if (comparer.Compare(finalpriority, priority) == 1)
+                //         finalState = state;
+                // }
             }
 
             _visited.Add(state.GetHash());
@@ -48,8 +45,8 @@ static class Solver
             {
                 if (_visited.Contains(nextState.GetHash())) continue;
                 var priority = new StatePriority(nextState.TimeSpentInHours, nextState.AvailableHP, nextState.AvailableMoney, heuristicCalculator(nextState.Station, Program.HOME_STATION));
-                _queue.Enqueue(nextState, priority);
                 _parents[nextState] = state;
+                _queue.Enqueue(nextState, priority);
             }
         }
 
