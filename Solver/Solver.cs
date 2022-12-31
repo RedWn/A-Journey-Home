@@ -2,9 +2,10 @@ using System.Diagnostics;
 
 static class Solver
 {
-    private static Dictionary<State, State?> _parents = new();
-    private static HashSet<string> _visited = new();
-    private static Stopwatch _stopWatch = new();
+    private static readonly Stopwatch _stopWatch = new();
+    private static readonly HashSet<string> _visited = new();
+    private static readonly Dictionary<State, State?> _parents = new();
+
     private static int _numberOfVisitedNodes = 0;
 
     public static void Solve(State initialState, IComparer<StatePriority> comparer, Heuristics.HeuristicCalculator heuristicCalculator)
@@ -22,25 +23,30 @@ static class Solver
         while (_queue.Count > 0)
         {
             State state = _queue.Dequeue();
+
             if (state.IsFinal())
             {
-                if (finalState is null)
-                    finalState = state;
-                else
-                {
-                    var finalpriority = new StatePriority(finalState.TimeSpentInHours, finalState.AvailableHP, finalState.AvailableMoney, heuristicCalculator(finalState.Station, Program.HOME_STATION));
-                    var priority = new StatePriority(state.TimeSpentInHours, state.AvailableHP, state.AvailableMoney, heuristicCalculator(state.Station, Program.HOME_STATION));
-                    if (comparer.Compare(finalpriority, priority) == 1)
-                        finalState = state;
-                }
+                finalState = state;
+                break;
+
+
+                //if (finalState is null)
+                //    finalState = state;
+                //else
+                //{
+                //    var finalpriority = new StatePriority(finalState.TimeSpentInHours, finalState.AvailableHP, finalState.AvailableMoney, heuristicCalculator(finalState.Station, Program.HOME_STATION));
+                //    var priority = new StatePriority(state.TimeSpentInHours, state.AvailableHP, state.AvailableMoney, heuristicCalculator(state.Station, Program.HOME_STATION));
+                //    if (comparer.Compare(finalpriority, priority) == 1)
+                //        finalState = state;
+                //}
             }
 
-            _visited.Add(state.getHash());
+            _visited.Add(state.GetHash());
             _numberOfVisitedNodes++;
 
             foreach (State nextState in state.GetNextStates())
             {
-                if (_visited.Contains(nextState.getHash())) continue;
+                if (_visited.Contains(nextState.GetHash())) continue;
                 var priority = new StatePriority(nextState.TimeSpentInHours, nextState.AvailableHP, nextState.AvailableMoney, heuristicCalculator(nextState.Station, Program.HOME_STATION));
                 _queue.Enqueue(nextState, priority);
                 _parents[nextState] = state;
@@ -66,7 +72,7 @@ static class Solver
             s = _parents[s];
         }
 
-        Console.WriteLine("\n\n\n\n");
+        Console.WriteLine("");
 
         while (statesPath.Count > 0)
         {
@@ -76,7 +82,5 @@ static class Solver
             Console.WriteLine($"HP: {state.AvailableHP} \t Time Spent: {state.TimeSpentInHours * 60} \t Money: {state.AvailableMoney}");
             Console.WriteLine();
         }
-
-        Console.WriteLine("Home... after 5 years on the east cost, it was time to go home."); //CJ
     }
 }

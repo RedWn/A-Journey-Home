@@ -85,8 +85,8 @@ class State
             PreviousConnection = this.PreviousConnection
         };
     }
-    public string getHash()
+    public string GetHash()
     {
-        return Station.Name + TimeSpentInHours + AvailableHP + AvailableMoney;
+        return String.Concat(Station.Name, TimeSpentInHours, AvailableHP, AvailableMoney);
     }
 }
