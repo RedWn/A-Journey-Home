@@ -27,7 +27,7 @@
         GrandmotherGarage.AddConnection(ConnectionType.TAXI, Coalers, GrandmotherGarage.CalcGeoDistTo(Coalers), 40);
         GrandmotherGarage.AddConnection(ConnectionType.BUS, TheHardworker, GrandmotherGarage.CalcGeoDistTo(TheHardworker), 20, "industry");
 
-        TheHardworker.AddConnection(ConnectionType.BUS, GrandmotherGarage, TheHardworker.CalcGeoDistTo(Coalers), 20, "industry");
+        TheHardworker.AddConnection(ConnectionType.BUS, GrandmotherGarage, TheHardworker.CalcGeoDistTo(GrandmotherGarage), 20, "industry");
         TheHardworker.AddConnection(ConnectionType.TAXI, TartarBlasphemy, TheHardworker.CalcGeoDistTo(TartarBlasphemy), 40);
         TheHardworker.AddConnection(ConnectionType.TAXI, UmayyadSquare, TheHardworker.CalcGeoDistTo(UmayyadSquare), 40);
         TheHardworker.AddConnection(ConnectionType.TAXI, BeautifulWoman, TheHardworker.CalcGeoDistTo(BeautifulWoman), 40);
@@ -47,15 +47,15 @@
         TheGarden.AddConnection(ConnectionType.TAXI, CornSquare, TheGarden.CalcGeoDistTo(CornSquare), 40);
         TheGarden.AddConnection(ConnectionType.BUS, Immigrants, TheGarden.CalcGeoDistTo(Immigrants), 20, "industry");
 
-        CornSquare.AddConnection(ConnectionType.TAXI, ReligionCorner, TheGarden.CalcGeoDistTo(ReligionCorner), 40);
+        CornSquare.AddConnection(ConnectionType.TAXI, ReligionCorner, CornSquare.CalcGeoDistTo(ReligionCorner), 40);
 
-        Immigrants.AddConnection(ConnectionType.BUS, ReligionCorner, TheGarden.CalcGeoDistTo(ReligionCorner), 20, "circler");
-        Immigrants.AddConnection(ConnectionType.TAXI, ProjectDestroyed, TheGarden.CalcGeoDistTo(ProjectDestroyed), 40);
+        Immigrants.AddConnection(ConnectionType.BUS, ReligionCorner, Immigrants.CalcGeoDistTo(ReligionCorner), 20, "circler");
+        Immigrants.AddConnection(ConnectionType.TAXI, ProjectDestroyed, Immigrants.CalcGeoDistTo(ProjectDestroyed), 40);
 
-        Consolation.AddConnection(ConnectionType.TAXI, BeautifulWoman, TheGarden.CalcGeoDistTo(BeautifulWoman), 40);
-        Consolation.AddConnection(ConnectionType.BUS, ProjectDestroyed, TheGarden.CalcGeoDistTo(ProjectDestroyed), 20, "shitty");
+        Consolation.AddConnection(ConnectionType.TAXI, BeautifulWoman, Consolation.CalcGeoDistTo(BeautifulWoman), 40);
+        Consolation.AddConnection(ConnectionType.BUS, ProjectDestroyed, Consolation.CalcGeoDistTo(ProjectDestroyed), 20, "shitty");
 
-        BeautifulWoman.AddConnection(ConnectionType.BUS, Consolation, TheGarden.CalcGeoDistTo(Consolation), 20, "circler");
+        BeautifulWoman.AddConnection(ConnectionType.BUS, Consolation, BeautifulWoman.CalcGeoDistTo(Consolation), 20, "circler");
 
         State initialState = new State(station: University, timeSpent: 0, hp: 50, money: 5000);
         HOME_STATION = ProjectDestroyed;
