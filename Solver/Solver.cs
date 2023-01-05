@@ -16,7 +16,10 @@ static class Solver
         State? finalState = null;
         _parents[initialState] = null;
 
-        var initialStatePriority = new StatePriority(initialState.TimeSpentInHours, initialState.AvailableHP, initialState.AvailableMoney, 0);
+        int initialHeuristicValue = 0;
+
+        var initialStatePriority = new StatePriority(initialState.TimeSpentInHours, initialState.AvailableHP, initialState.AvailableMoney, initialHeuristicValue);
+        
         _queue.Enqueue(initialState, initialStatePriority);
 
         while (_queue.Count > 0)
@@ -96,7 +99,7 @@ static class Solver
             var state = statesPath.Pop();
             Console.WriteLine($"Station: {state.Station.Name}");
             Console.WriteLine($"Transportation Method: {state.PreviousConnection?.Type}");
-            Console.WriteLine($"HP: {state.AvailableHP} \t Time Spent: {state.TimeSpentInHours * 60} \t Money: {state.AvailableMoney}");
+            Console.WriteLine($"HP: {state.AvailableHP} \t Time Spent: {state.TimeSpentInHours * 60} Minutes \t Money: {state.AvailableMoney} Syrian Pounds");
             Console.WriteLine();
         }
     }

@@ -60,6 +60,6 @@
         State initialState = new State(station: University, timeSpent: 0, hp: 50, money: 5000);
         HOME_STATION = ProjectDestroyed;
 
-        Solver.SolveForBestTime(initialState);
+        Solver.SolveForAllBestConditions(initialState);
     }
 }

@@ -38,7 +38,7 @@ public class BestHPGoal : IComparer<StatePriority>
     }
 }
 
-public class BestAllGoal : IComparer<StatePriority> //this is testing ground and is not complete AT ALL
+public class BestAllGoal : IComparer<StatePriority>
 {
     public int Compare(StatePriority x, StatePriority y)
     {
